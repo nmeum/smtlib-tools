@@ -79,7 +79,9 @@ collectExpr e = error $ "collectExpr: Unknown expression '" ++ show e ++ "'"
 collectCmd :: SMT.SExpr -> State Stats ()
 collectCmd (SMT.List [SMT.Atom "check-sat-assuming", SMT.List assumptions])
   = collectName "check-sat-assuming" >> forM_ assumptions collectExpr
-collectCmd _ = pure ()
+collectCmd (SMT.List ((SMT.Atom "set-logic") : _)) = pure ()
+collectCmd (SMT.List ((SMT.Atom "declare-fun") : _)) = pure ()
+collectCmd cmd = error $ "collectCmd: Unknown command '" ++ show cmd ++ "'"
 
 collect :: [SMT.SExpr] -> State Stats ()
 collect sexprs = forM_ sexprs collectCmd
