@@ -74,6 +74,7 @@ collectExpr (SMT.List [SMT.Atom "bvult", lhs, rhs]) = collectBinary "bvult" lhs 
 collectExpr (SMT.List [SMT.Atom "bvuge", lhs, rhs]) = collectBinary "bvuge" lhs rhs
 collectExpr (SMT.List [SMT.Atom "bvugt", lhs, rhs]) = collectBinary "bvugt" lhs rhs
 collectExpr (SMT.Atom _) = pure ()
+collectExpr (SMT.List [SMT.Atom "_", SMT.Atom _, SMT.Atom _]) = pure ()
 collectExpr e = error $ "collectExpr: Unknown expression '" ++ show e ++ "'"
 
 collectCmd :: SMT.SExpr -> State Stats ()
