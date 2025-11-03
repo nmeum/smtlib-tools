@@ -7,7 +7,7 @@ import Control.Monad.State (State, modify, runState)
 import SimpleSMT qualified as SMT
 import System.IO (stdin, hGetContents)
 
--- TODO: More stats (nesting depth, etc.)
+-- TODO: More stats (sorts, nesting depth, etc.)
 data Stats
   = Stats
   { statsExprs :: Map.Map String Int }
