@@ -10,7 +10,7 @@ copyright:          (c) 2025 Technische Universität Branuschweig
 common warnings
     ghc-options: -Wall
 
-executable normalize-smt2
+executable analyze-smt2
     import:           warnings
     main-is:          Main.hs
     build-depends:    base,
