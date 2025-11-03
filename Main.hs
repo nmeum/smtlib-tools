@@ -78,7 +78,7 @@ collectExpr e = error $ "collectExpr: Unknown expression '" ++ show e ++ "'"
 
 collectCmd :: SMT.SExpr -> State Stats ()
 collectCmd (SMT.List [SMT.Atom "check-sat-assuming", SMT.List assumptions])
-  = forM_ assumptions collectExpr
+  = collectName "check-sat-assuming" >> forM_ assumptions collectExpr
 collectCmd _ = pure ()
 
 collect :: [SMT.SExpr] -> State Stats ()
