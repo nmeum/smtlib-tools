@@ -8,7 +8,7 @@ build-type:         Simple
 copyright:          (c) 2025 Technische Universität Branuschweig
 
 common warnings
-    ghc-options: -Wall
+    ghc-options: -Wall -O3
 
 executable analyze-smt2
     import:           warnings
