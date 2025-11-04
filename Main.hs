@@ -49,6 +49,7 @@ collectExpr (SMT.List [SMT.List [SMT.Atom "_", SMT.Atom "sign_extend", _], expr]
 collectExpr (SMT.List [SMT.Atom "ite", cond, ifT, ifF]) = do
   collectName "ite"
   collectExpr cond >> collectExpr ifT >> collectExpr ifF
+collectExpr (SMT.List [SMT.Atom "concat", lhs, rhs]) = collectBinary "concat" lhs rhs
 collectExpr (SMT.List [SMT.Atom "bvadd", lhs, rhs]) = collectBinary "bvadd" lhs rhs
 collectExpr (SMT.List [SMT.Atom "bvsub", lhs, rhs]) = collectBinary "bvsub" lhs rhs
 collectExpr (SMT.List [SMT.Atom "bvmul", lhs, rhs]) = collectBinary "bvmul" lhs rhs
