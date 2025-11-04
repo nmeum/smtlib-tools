@@ -11,6 +11,19 @@ type Stats = Map.Map String Int
 mkStats :: Stats
 mkStats = Map.empty
 
+toCSV :: Stats -> String
+toCSV e =
+  unlines $ header : map go (Map.toList e)
+  where
+    seperator :: String
+    seperator = ";"
+
+    header :: String
+    header = "name" ++ seperator ++ "occurrence"
+
+    go :: (String, Int) -> String
+    go (n, c) = "\"" ++ n ++ "\"" ++ seperator ++ show c
+
 ------------------------------------------------------------------------
 
 collectName :: String -> State Stats ()
@@ -90,4 +103,4 @@ getStats exprs = snd $ collectStats exprs
 main :: IO ()
 main = do
   exprs <- readSExprs <$> hGetContents stdin
-  putStr (show $ getStats exprs)
+  putStr (toCSV $! getStats exprs)
