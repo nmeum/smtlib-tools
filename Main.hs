@@ -27,10 +27,15 @@ collectExpr (SMT.List (SMT.Atom "=" : values))
   = forM_ values collectExpr
 collectExpr (SMT.List [SMT.Atom "not", p]) = collectName "not" >> collectExpr p
 collectExpr (SMT.List [SMT.Atom "bvneg", p]) = collectName "bvneg" >> collectExpr p
+collectExpr (SMT.List [SMT.List [SMT.Atom "_", SMT.Atom "extract", _, _], expr])
+  = collectName "expr" >> collectExpr expr
 collectExpr (SMT.List [SMT.List [SMT.Atom "_", SMT.Atom "zero_extend", _], expr])
   = collectName "zero_extend" >> collectExpr expr
 collectExpr (SMT.List [SMT.List [SMT.Atom "_", SMT.Atom "sign_extend", _], expr])
   = collectName "sign_extend" >> collectExpr expr
+collectExpr (SMT.List [SMT.Atom "ite", cond, ifT, ifF]) = do
+  collectName "ite"
+  collectExpr cond >> collectExpr ifT >> collectExpr ifF
 collectExpr (SMT.List [SMT.Atom "bvadd", lhs, rhs]) = collectBinary "bvadd" lhs rhs
 collectExpr (SMT.List [SMT.Atom "bvsub", lhs, rhs]) = collectBinary "bvsub" lhs rhs
 collectExpr (SMT.List [SMT.Atom "bvmul", lhs, rhs]) = collectBinary "bvmul" lhs rhs
@@ -38,6 +43,7 @@ collectExpr (SMT.List [SMT.Atom "bvsdiv", lhs, rhs]) = collectBinary "bvsdiv" lh
 collectExpr (SMT.List [SMT.Atom "bvudiv", lhs, rhs]) = collectBinary "bvudiv" lhs rhs
 collectExpr (SMT.List [SMT.Atom "bvxor", lhs, rhs]) = collectBinary "bvxor" lhs rhs
 collectExpr (SMT.List [SMT.Atom "bvand", lhs, rhs]) = collectBinary "bvand" lhs rhs
+collectExpr (SMT.List [SMT.Atom "bvor", lhs, rhs]) = collectBinary "bvor" lhs rhs
 collectExpr (SMT.List [SMT.Atom "bvurem", lhs, rhs]) = collectBinary "bvurem" lhs rhs
 collectExpr (SMT.List [SMT.Atom "bvsrem", lhs, rhs]) = collectBinary "bvsrem" lhs rhs
 collectExpr (SMT.List [SMT.Atom "bvashr", lhs, rhs]) = collectBinary "bvashr" lhs rhs
