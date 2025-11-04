@@ -1,43 +1,21 @@
 module Main where
 
-import Data.Maybe (fromMaybe)
-import Data.Map qualified as Map
+import Data.Map.Strict qualified as Map
 import Control.Monad (forM_)
-import Control.Monad.State (State, modify, runState)
+import Control.Monad.State.Strict (State, modify, runState)
 import SimpleSMT qualified as SMT
 import System.IO (stdin, hGetContents)
 
--- TODO: More stats (sorts, nesting depth, etc.)
-data Stats
-  = Stats
-  { statsExprs :: Map.Map String Int }
-  deriving (Show)
+type Stats = Map.Map String Int
 
 mkStats :: Stats
-mkStats = Stats Map.empty
-
-addExpr :: Stats -> String -> Stats
-addExpr s@Stats { statsExprs = e } name =
-  let curCount = fromMaybe 0 $ Map.lookup name e
-    in s { statsExprs = Map.insert name (curCount + 1) e }
-
-toCSV :: Stats -> String
-toCSV Stats { statsExprs = e } =
-  unlines $ header : map go (Map.toList e)
-  where
-    seperator :: String
-    seperator = ";"
-
-    header :: String
-    header = "name" ++ seperator ++ "occurrence"
-
-    go :: (String, Int) -> String
-    go (n, c) = "\"" ++ n ++ "\"" ++ seperator ++ show c
+mkStats = Map.empty
 
 ------------------------------------------------------------------------
 
 collectName :: String -> State Stats ()
-collectName name = modify ( \s -> addExpr s name )
+collectName name =
+  modify $ Map.insertWith (+) name 1
 
 collectBinary :: String -> SMT.SExpr -> SMT.SExpr -> State Stats ()
 collectBinary name lhs rhs = do
@@ -106,4 +84,4 @@ getStats exprs = snd $ collectStats exprs
 main :: IO ()
 main = do
   exprs <- readSExprs <$> hGetContents stdin
-  putStr (toCSV $ getStats exprs)
+  putStr (show $ getStats exprs)
