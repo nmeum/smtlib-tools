@@ -41,7 +41,7 @@ collectExpr (SMT.List (SMT.Atom "=" : values))
 collectExpr (SMT.List [SMT.Atom "not", p]) = collectName "not" >> collectExpr p
 collectExpr (SMT.List [SMT.Atom "bvneg", p]) = collectName "bvneg" >> collectExpr p
 collectExpr (SMT.List [SMT.List [SMT.Atom "_", SMT.Atom "extract", _, _], expr])
-  = collectName "expr" >> collectExpr expr
+  = collectName "extract" >> collectExpr expr
 collectExpr (SMT.List [SMT.List [SMT.Atom "_", SMT.Atom "zero_extend", _], expr])
   = collectName "zero_extend" >> collectExpr expr
 collectExpr (SMT.List [SMT.List [SMT.Atom "_", SMT.Atom "sign_extend", _], expr])
