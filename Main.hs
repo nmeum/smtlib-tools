@@ -82,7 +82,7 @@ collectCmd (SMT.List [SMT.Atom "check-sat-assuming", SMT.List assumptions])
   = collectName "check-sat-assuming" >> forM_ assumptions collectExpr
 collectCmd (SMT.List ((SMT.Atom "set-logic") : _)) = pure ()
 collectCmd (SMT.List ((SMT.Atom "declare-fun") : _)) = pure ()
-collectCmd (SMT.List (SMT.Atom "check-sat":_)) = pure ()
+collectCmd (SMT.List (SMT.Atom "check-sat":_)) = collectName "check-sat" >> pure ()
 collectCmd (SMT.List (SMT.Atom "pop":_)) = pure ()
 collectCmd (SMT.List (SMT.Atom "push":_)) = pure ()
 collectCmd (SMT.List [SMT.Atom "assert", expr]) = collectExpr expr
