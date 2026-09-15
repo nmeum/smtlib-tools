@@ -16,5 +16,5 @@ executable smt-analyze
     build-depends:    base,
                       mtl,
                       containers,
-                      simple-smt
+                      simple-smt >= 1.0.1 && <1.1
     default-language: GHC2021
