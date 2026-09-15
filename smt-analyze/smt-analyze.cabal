@@ -1,17 +1,17 @@
 cabal-version:      3.4
-name:               analyze-smt2
+name:               smt-analyze
 version:            0.1.0.0
 license:            MIT
 author:             Sören Tempel
 maintainer:         tempel@ibr.cs.tu-bs.de
 build-type:         Simple
-copyright:          (c) 2025 Technische Universität Branuschweig
+copyright:          (c) 2025-2026 Technische Universität Branuschweig
 
-common warnings
+common opts
     ghc-options: -Wall -O3
 
-executable analyze-smt2
-    import:           warnings
+executable smt-analyze
+    import:           opts
     main-is:          Main.hs
     build-depends:    base,
                       mtl,
