@@ -1,0 +1,20 @@
+cabal-version:      3.4
+name:               smt-simplify
+version:            0.1.0.0
+license:            MIT
+author:             Sören Tempel
+maintainer:         tempel@ibr.cs.tu-bs.de
+build-type:         Simple
+copyright:          (c) 2026 Technische Universität Branuschweig
+
+common opts
+    ghc-options: -Wall
+
+executable smt-simplify
+    import:           opts
+    main-is:          Main.hs
+    build-depends:    base,
+                      text,
+                      conduit >= 1.3.6 && < 1.4,
+                      simple-smt >= 1.0.1 && <1.1
+    default-language: GHC2021
