@@ -38,6 +38,7 @@ collectBinary name lhs rhs = do
 collectExpr :: SMT.SExpr -> State Stats ()
 collectExpr (SMT.List (SMT.Atom "=" : values))
   = forM_ values collectExpr
+collectExpr (SMT.List [SMT.Atom "or", lhs, rhs]) = collectBinary "or" lhs rhs
 collectExpr (SMT.List [SMT.Atom "not", p]) = collectName "not" >> collectExpr p
 collectExpr (SMT.List [SMT.Atom "bvneg", p]) = collectName "bvneg" >> collectExpr p
 collectExpr (SMT.List [SMT.List [SMT.Atom "_", SMT.Atom "extract", _, _], expr])
