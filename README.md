@@ -1,4 +1,4 @@
-# smt-tools
+# smtlib-tools
 
 Various self-contained programs for working with [SMT-LIB] files.
 Lousy research-grade code without documentation and lots of limitations and bugs.
