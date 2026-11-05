@@ -8,7 +8,8 @@ build-type:         Simple
 copyright:          (c) 2026 Technische Universität Branuschweig
 
 common opts
-    ghc-options: -Wall
+    -- -threaded required by simple-smt, see <https://github.com/yav/simple-smt/issues/28>.
+    ghc-options: -Wall -threaded
 
 executable smt-simplify
     import:           opts
